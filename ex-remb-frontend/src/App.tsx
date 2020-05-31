@@ -4,6 +4,7 @@ import { Home } from './components/Home';
 import { LoginComponent } from './components/LoginComponent';
 import { NavComponent } from './components/NavComponent';
 import { User } from './models/User';
+import { login } from './api/projectClient';
 
 interface IAppState {
     loggedInUser : User | null
@@ -18,6 +19,18 @@ export class App extends React.Component<any, IAppState> {
         }
     }
 
+    async componentDidMount() {
+        // not secure, but for making development easier
+        const un : string | null = localStorage.getItem('username');
+        const pw : string | null = localStorage.getItem('password');
+        if (un && pw) {
+            const autoLoggedInUser : User = await login(un, pw);
+            this.setState({loggedInUser: autoLoggedInUser});
+        } else {
+            console.log('nothing happened');
+        }
+    }
+
     setAppUser = (user : User) : void => {
         this.setState({
             loggedInUser: user
@@ -25,6 +38,7 @@ export class App extends React.Component<any, IAppState> {
     }
     
     logOut = () : void => {
+        localStorage.clear();
         this.setState({
             loggedInUser: null
         })
@@ -37,8 +51,8 @@ export class App extends React.Component<any, IAppState> {
                 <Switch>
                     <Route exact path="/">
                         {this.state.loggedInUser ? 
-                            <Home /> :
-                            <LoginComponent setAppUser={this.setAppUser}/>
+                            <Home loggedInUser={this.state.loggedInUser} /> :
+                            <LoginComponent setAppUser={this.setAppUser} />
                         }
                     </Route>
                 </Switch>

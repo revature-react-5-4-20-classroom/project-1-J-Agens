@@ -51,7 +51,10 @@ export class LoginComponent extends React.Component<ILoginComponentProps, ILogin
         try {
             const loggedInUser : User = await login(this.state.username, this.state.password);
             this.props.setAppUser(loggedInUser);
+            localStorage.setItem('username', this.state.username);
+            localStorage.setItem('password', this.state.password);
             this.setState({username: '', password: ''});
+            
         } catch (error) {
             this.setState({password: '', isError: true, errorMessage: error.message});
         }

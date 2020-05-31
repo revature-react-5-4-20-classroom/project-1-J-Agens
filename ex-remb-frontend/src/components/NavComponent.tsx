@@ -11,7 +11,8 @@ import {
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
-    NavbarText
+    NavbarText,
+    Button
   } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { User } from '../models/User';
@@ -31,28 +32,17 @@ export const NavComponent = (props : INavComponentProps) => {
             <Collapse isOpen={isOpen} navbar>
             <Nav className="mr-auto" navbar>
                 <NavItem>
-                    <NavLink tag={Link} to="/">Home</NavLink>
+                    <NavLink tag={Link} to="/"> Home </NavLink>
                 </NavItem>
-                <UncontrolledDropdown nav inNavbar>
-                    <DropdownToggle nav caret>
-                        Options
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                        <DropdownItem>
-                        Option 1
-                        </DropdownItem>
-                        <DropdownItem>
-                        Option 2
-                        </DropdownItem>
-                        <DropdownItem divider />
-                        <DropdownItem>
-                        Reset
-                        </DropdownItem>
-                    </DropdownMenu>
-                </UncontrolledDropdown>
+                <NavItem>
+                    <NavLink tag={Link} to="/reimbursements/new"> New + </NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink tag={Link} to={`/reimbursements/author/${props.loggedInUser?.userId}`}> My Tickets </NavLink>
+                </NavItem>
                 <NavItem>
                     {props.loggedInUser ? 
-                        <NavLink tag={Link} onClick={props.logOut} to="/">Log Out</NavLink>
+                        <NavLink tag={Link} onClick={props.logOut} to="/"> Log Out </NavLink>
                         :
                         <NavLink tag={Link} to="/">Login</NavLink>
                     }

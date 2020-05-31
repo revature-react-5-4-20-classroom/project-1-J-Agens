@@ -10,8 +10,8 @@ const projectClient = axios.create({
 export async function login(un : string, pw : string) : Promise<User> {
     try {
         const response = await projectClient.post('/login', {username: un, password: pw});
-        const {id, username, password, email, role} = response.data;
-        return new User(id, username, password, email, role);
+        const {userId, username, password, firstName, lastName, email, role} = response.data;
+        return new User(userId, username, password, firstName, lastName, email, role);
     } catch (e) {
         if (e.response.status === 401) {
             throw new FailedLoginError('Failed to authenticate: ', un);

@@ -52,7 +52,7 @@ export const NavComponent = (props : INavComponentProps) => {
                 </UncontrolledDropdown>
                 <NavItem>
                     {props.loggedInUser ? 
-                        <NavLink tag={Link} onClick={props.logOut}>Log Out</NavLink>
+                        <NavLink tag={Link} onClick={props.logOut} to="/">Log Out</NavLink>
                         :
                         <NavLink tag={Link} to="/">Login</NavLink>
                     }

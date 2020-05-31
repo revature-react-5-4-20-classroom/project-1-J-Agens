@@ -18,22 +18,28 @@ export class App extends React.Component<any, IAppState> {
         }
     }
 
-    setAppUser = (user : User) => {
+    setAppUser = (user : User) : void => {
         this.setState({
             loggedInUser: user
         });
-    } 
+    }
+    
+    logOut = () : void => {
+        this.setState({
+            loggedInUser: null
+        })
+    }
 
     render() {
         return (
             <div>
-                <NavComponent loggedInUser={this.state.loggedInUser}/>
+                <NavComponent loggedInUser={this.state.loggedInUser} logOut={this.logOut}/>
                 <Switch>
                     <Route exact path="/">
-                        <Home />
-                    </Route>
-                    <Route path="/login">
-                        <LoginComponent />
+                        {this.state.loggedInUser ? 
+                            <Home /> :
+                            <LoginComponent setAppUser={this.setAppUser}/>
+                        }
                     </Route>
                 </Switch>
             </div>

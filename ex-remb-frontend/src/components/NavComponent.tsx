@@ -17,7 +17,8 @@ import { Link } from 'react-router-dom';
 import { User } from '../models/User';
 
 interface INavComponentProps {
-    loggedInUser: User | null
+    loggedInUser: User | null,
+    logOut: () => void;
 }
 
 export const NavComponent = (props : INavComponentProps) => {
@@ -32,26 +33,30 @@ export const NavComponent = (props : INavComponentProps) => {
                 <NavItem>
                     <NavLink tag={Link} to="/">Home</NavLink>
                 </NavItem>
-                <NavItem>
-                    <NavLink tag={Link} to="/login">Login</NavLink>
-                </NavItem>
                 <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                    Options
-                </DropdownToggle>
-                <DropdownMenu right>
-                    <DropdownItem>
-                    Option 1
-                    </DropdownItem>
-                    <DropdownItem>
-                    Option 2
-                    </DropdownItem>
-                    <DropdownItem divider />
-                    <DropdownItem>
-                    Reset
-                    </DropdownItem>
-                </DropdownMenu>
+                    <DropdownToggle nav caret>
+                        Options
+                    </DropdownToggle>
+                    <DropdownMenu right>
+                        <DropdownItem>
+                        Option 1
+                        </DropdownItem>
+                        <DropdownItem>
+                        Option 2
+                        </DropdownItem>
+                        <DropdownItem divider />
+                        <DropdownItem>
+                        Reset
+                        </DropdownItem>
+                    </DropdownMenu>
                 </UncontrolledDropdown>
+                <NavItem>
+                    {props.loggedInUser ? 
+                        <NavLink tag={Link} onClick={props.logOut}>Log Out</NavLink>
+                        :
+                        <NavLink tag={Link} to="/">Login</NavLink>
+                    }
+                </NavItem>
             </Nav>
             <NavbarText>{props.loggedInUser ? props.loggedInUser.username : 'Please Log In'}</NavbarText>
             </Collapse>

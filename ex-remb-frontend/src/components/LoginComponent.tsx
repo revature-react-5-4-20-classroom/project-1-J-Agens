@@ -75,7 +75,7 @@ export class LoginComponent extends React.Component<ILoginComponentProps, ILogin
                         <Label for="password" sm={2}>Password</Label>
                         <Col sm={6}>
                             {/* input can be set to required here with an attribute I don't remember */}
-                            <Input onChange={this.handleChange} value={this.state.password} type="text" name="password" id="password" placeholder="password"></Input>
+                            <Input onChange={this.handleChange} value={this.state.password} type="password" name="password" id="password" placeholder="password"></Input>
                         </Col>
                     </FormGroup>
                     <Button type="submit">Submit</Button>

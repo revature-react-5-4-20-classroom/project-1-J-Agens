@@ -38,7 +38,7 @@ export const NavComponent = (props : INavComponentProps) => {
                     <NavLink tag={Link} to="/reimbursements/new"> New + </NavLink>
                 </NavItem>
                 <NavItem>
-                    <NavLink tag={Link} to={`/reimbursements/author/${props.loggedInUser?.userId}`}> My Tickets </NavLink>
+                    <NavLink tag={Link} to={`/reimbursements/author/userId/${props.loggedInUser?.userId}`}> My Tickets </NavLink>
                 </NavItem>
                 <NavItem>
                     {props.loggedInUser ? 

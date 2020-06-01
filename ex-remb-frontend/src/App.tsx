@@ -5,6 +5,7 @@ import { LoginComponent } from './components/LoginComponent';
 import { NavComponent } from './components/NavComponent';
 import { User } from './models/User';
 import { login } from './api/projectClient';
+import { NewRembPage } from './containers/NewRembPage';
 
 interface IAppState {
     loggedInUser : User | null
@@ -66,7 +67,7 @@ export class App extends React.Component<any, IAppState> {
                     <Route 
                         path="/reimbursements/new"
                         render={routerProps => 
-                            <Home {...routerProps} loggedInUser={this.state.loggedInUser} />
+                            <NewRembPage {...routerProps} loggedInUser={this.state.loggedInUser} />
                         }
                     />
                     </Switch>

@@ -42,9 +42,9 @@ export const NavComponent = (props : INavComponentProps) => {
                 </NavItem>
                 <NavItem>
                     {props.loggedInUser ? 
-                        <NavLink tag={Link} onClick={props.logOut} to="/"> Log Out </NavLink>
+                        <NavLink tag={Link} onClick={props.logOut} to="/login"> Log Out </NavLink>
                         :
-                        <NavLink tag={Link} to="/">Login</NavLink>
+                        <NavLink tag={Link} to="/login">Login</NavLink>
                     }
                 </NavItem>
             </Nav>

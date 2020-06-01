@@ -54,7 +54,6 @@ export class LoginComponent extends React.Component<ILoginComponentProps, ILogin
             localStorage.setItem('username', this.state.username);
             localStorage.setItem('password', this.state.password);
             this.setState({username: '', password: ''});
-            
         } catch (error) {
             this.setState({password: '', isError: true, errorMessage: error.message});
         }

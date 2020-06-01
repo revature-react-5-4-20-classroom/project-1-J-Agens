@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { Home } from './components/Home';
+import { Home } from './containers/Home';
 import { LoginComponent } from './components/LoginComponent';
 import { NavComponent } from './components/NavComponent';
 import { User } from './models/User';
@@ -49,12 +49,28 @@ export class App extends React.Component<any, IAppState> {
             <div>
                 <NavComponent loggedInUser={this.state.loggedInUser} logOut={this.logOut}/>
                 <Switch>
-                    <Route exact path="/">
-                        {this.state.loggedInUser ? 
-                            <Home loggedInUser={this.state.loggedInUser} /> :
-                            <LoginComponent setAppUser={this.setAppUser} />
-                        }
+                    <Route 
+                    exact path="/login" 
+                    render={ routerProps => 
+                        <LoginComponent {...routerProps} setAppUser={this.setAppUser} />
+                    }>
                     </Route>
+                    {this.state.loggedInUser ? 
+                    <Switch>
+                    <Route
+                        exact path="/"
+                        render={ routerProps => 
+                            <Home {...routerProps} loggedInUser={this.state.loggedInUser} />
+                        }
+                    />
+                    <Route 
+                        path="/reimbursements/new"
+                        render={routerProps => 
+                            <Home {...routerProps} loggedInUser={this.state.loggedInUser} />
+                        }
+                    />
+                    </Switch>
+                    : null}
                 </Switch>
             </div>
         )

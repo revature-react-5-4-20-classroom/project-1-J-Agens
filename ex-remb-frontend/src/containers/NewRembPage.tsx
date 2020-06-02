@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Jumbotron, Form, Row, Col, FormGroup, Label, Input, Button } from 'reactstrap';
 import { User } from '../models/User';
+import { submitTicket } from '../api/projectClient';
 
 // Changed loggedInUser prop to any type to avoid trouble with compiling
 interface INewRembPageProps {
@@ -8,11 +9,10 @@ interface INewRembPageProps {
 }
 
 interface INewRembPageState {
-    author: number;
     amount: number;
     dateSubmitted: string; // 'DD/MM/YYYY'
     description: string;
-    type: number | null;
+    type: number;
     isError: boolean;
     errorMessage: string;
 }
@@ -22,22 +22,62 @@ export class NewRembPage extends React.Component<INewRembPageProps, INewRembPage
     constructor(props : INewRembPageProps) {
         super(props);
         this.state = {
-            author: this.props.loggedInUser.userId,
+            // author: this.props.loggedInUser.userId,
             amount: 0,
             dateSubmitted: '',
             description: '',
-            type: null,
+            type: 1,
             isError: false,
             errorMessage: ''
         }
     }
 
-    handleSubmit = (e : any) => {
+
+    handleChange = (e : any) => {
+        switch (e.target.name) {
+            case 'amount':
+                this.setState({amount: parseFloat(e.target.value)});
+                break;
+            case 'dateSubmitted':
+                this.setState({dateSubmitted: e.target.value})
+                break;
+            case 'description':
+                this.setState({description: e.target.value});
+                break;
+            case 'type':
+                this.setState({type: parseInt(e.target.value)});
+            default:
+                break;
+        }
+    }
+
+    handleSubmit = async (e : any) => {
         e.preventDefault();
+        
+        try {
+            const newRemb = await submitTicket(
+                this.props.loggedInUser.userId,
+                this.state.amount,
+                this.state.dateSubmitted,
+                this.state.description,
+                this.state.type,
+            );
+            this.setState({
+                amount: 0,
+                dateSubmitted: '',
+                description: '',
+                type: 1
+            });
+            console.log('NEW REIMBURSEMENT CREATED', newRemb);
+            
+        } catch (error) {
+            this.setState({isError: true, errorMessage: error.message + " please include required fields."});
+        }
     }
 
     
     render() {
+        
         return (
             <div>
                 <Jumbotron>
@@ -55,27 +95,27 @@ export class NewRembPage extends React.Component<INewRembPageProps, INewRembPage
                             <Col md={6}>
                             <FormGroup>
                                 <Label for="amountInput">amount</Label>
-                                <Input type="number" name="amount" id="amountInput" placeholder="$00.00" />
+                                <Input value={this.state.amount} onChange={this.handleChange} type="number" min="1" step=".01" name="amount" id="amountInput"  placeholder="$00.00" />
                             </FormGroup>
                             </Col>
                             <Col md={6}>
                             <FormGroup>
                                 <Label for="dateSubmittedInput">Date</Label>
-                                <Input type="text" name="dateSubmitted" id="dateSubmittedInput" placeholder="DD/MM/YYYY" />
+                                <Input value={this.state.dateSubmitted} onChange={this.handleChange} type="text" name="dateSubmitted" id="dateSubmittedInput" placeholder="DD/MM/YYYY" />
                             </FormGroup>
                             </Col>
                         </Row>
                         <FormGroup>
                             <Label for="descriptionInput">Description</Label>
-                            <Input type="text" name="description" id="descriptionInput" placeholder="Please provide a short description"/>
+                            <Input value={this.state.description} onChange={this.handleChange} type="text" name="description" id="descriptionInput" placeholder="Please provide a short description"/>
                         </FormGroup>
                         <FormGroup>
                             <Label for="typeInput">Select</Label>
-                            <Input type="select" name="type" id="typeInput">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
+                            <Input value={this.state.type} onChange={this.handleChange} type="select" name="type" id="typeInput">
+                                <option value={1}>Lodging</option>
+                                <option value={2}>Travel</option>
+                                <option value={3}>Food</option>
+                                <option value={4}>Other</option>
                             </Input>
                         </FormGroup>
                         <Button>Submit</Button>

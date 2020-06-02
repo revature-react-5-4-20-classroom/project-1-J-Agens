@@ -3,7 +3,7 @@ import { User } from '../models/User';
 import { Table } from 'reactstrap';
 
 interface IUserInfoTableProps {
-    loggedInUser : User
+    loggedInUser? : User | null
 }
 
 export const UserInfoTable = (props : IUserInfoTableProps) => {
@@ -12,23 +12,23 @@ export const UserInfoTable = (props : IUserInfoTableProps) => {
             <tbody>
                 <tr>
                     <th scope="row">Username</th>
-                    <td>{props.loggedInUser.username}</td>
+                    <td>{props.loggedInUser?.username}</td>
                 </tr>
                 <tr>
                     <th scope="row">First Name</th>
-                    <td>{props.loggedInUser.firstName}</td>
+                    <td>{props.loggedInUser?.firstName}</td>
                 </tr>
                 <tr>
                     <th scope="row">Last Name</th>
-                    <td>{props.loggedInUser.lastName}</td>
+                    <td>{props.loggedInUser?.lastName}</td>
                 </tr>
                 <tr>
                     <th scope="row">Email</th>
-                    <td>{props.loggedInUser.email}</td>
+                    <td>{props.loggedInUser?.email}</td>
                 </tr>
                 <tr>
                     <th scope="row">Role</th>
-                    <td>{props.loggedInUser.role ? props.loggedInUser.role.role : null}</td>
+                    <td>{props.loggedInUser?.role ? props.loggedInUser.role.role : null}</td>
                 </tr>
             </tbody>
         </Table>

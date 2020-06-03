@@ -1,0 +1,11 @@
+.pending-ticket {
+    color: orange;
+}
+
+.approved-ticket {
+    color: green;
+}
+
+.denied-ticket {
+    color: rgb(148, 13, 13);
+}

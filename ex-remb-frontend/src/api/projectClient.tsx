@@ -25,9 +25,7 @@ export async function login(un : string, pw : string) : Promise<User> {
 
 export async function submitTicket(ath : number, amt : number, date : string, dsc : string, typ : number) : Promise<Reimbursement> {
 
-    try {
-        console.log("amount is type: ", typeof amt);
-        
+    try {        
         const configObj = {author: ath, amount: amt, dateSubmitted: date, description: dsc, type: typ}
         const response = await projectClient.post('/reimbursements', configObj);
         const {
@@ -55,6 +53,34 @@ export async function submitTicket(ath : number, amt : number, date : string, ds
     } catch (e) {
         if (e.response.status === 400) {
             throw new FailedLoginError('Failed to Create new ticket: ', dsc);
+        } else {
+            throw e;
+        }
+    }
+}
+
+export async function getMyTickets(u : number) : Promise<Reimbursement[]> {
+    try {
+        const response = await projectClient.get(`/reimbursements/author/userId/${u}`);
+        const myTickets = response.data.map((ticket : any) => {
+            // Remember that date is a number, should be reformatted later
+            const dateSub = ticket.dateSubmitted.slice(0, 10);
+            return (new Reimbursement(
+                ticket.reimbursementId, 
+                ticket.author, 
+                ticket.amount, 
+                dateSub,
+                ticket.dateResolved, 
+                ticket.description, 
+                ticket.resolver, 
+                ticket.status, 
+                ticket.type
+            ));
+        });
+        return myTickets;
+    } catch (e) {
+        if (e.response.status === 400) {
+            throw new FailedLoginError('Failed to get your tickets: ', `${u}`);
         } else {
             throw e;
         }

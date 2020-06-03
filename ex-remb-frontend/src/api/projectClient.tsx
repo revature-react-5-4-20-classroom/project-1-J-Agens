@@ -86,3 +86,18 @@ export async function getMyTickets(u : number) : Promise<Reimbursement[]> {
         }
     }
 }
+
+export async function editMyInfo(uId : number, un: string, em: string) : Promise<User> {
+    try {
+        const configObj = {userId: uId, username: un, email: em}
+        const response = await projectClient.patch('/users', configObj);
+        const {userId, username, password, firstName, lastName, email, role} = response.data;
+        return new User(userId, username, password, firstName, lastName, email, role);
+    } catch (e) {
+        if (e.response.status === 400) {
+            throw new FailedLoginError('Failed to edit your info: ', un);
+        } else {
+            throw e;
+        }
+    }
+}

@@ -66,7 +66,10 @@ export class App extends React.Component<any, IAppState> {
                     <Route
                         exact path="/"
                         render={ routerProps => 
-                            <Home {...routerProps} loggedInUser={this.state.loggedInUser ? this.state.loggedInUser : null} />
+                            <Home {...routerProps} 
+                                setAppUser={this.setAppUser} 
+                                loggedInUser={this.state.loggedInUser ? this.state.loggedInUser : null}
+                            />
                         }
                     />
                     <Route 

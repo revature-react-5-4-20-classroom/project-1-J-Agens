@@ -1,9 +1,10 @@
 import React from 'react';
 import { User } from '../models/User';
-import { Table } from 'reactstrap';
+import { Table, Button } from 'reactstrap';
 
 interface IUserInfoTableProps {
     loggedInUser? : User | null
+    toggleEdit: () => void;
 }
 
 export const UserInfoTable = (props : IUserInfoTableProps) => {
@@ -31,6 +32,7 @@ export const UserInfoTable = (props : IUserInfoTableProps) => {
                     <td>{props.loggedInUser?.role ? props.loggedInUser.role.role : null}</td>
                 </tr>
             </tbody>
+            <Button onClick={props.toggleEdit}>Edit Info</Button>
         </Table>
     )
 }

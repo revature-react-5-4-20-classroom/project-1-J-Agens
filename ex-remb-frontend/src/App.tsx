@@ -98,7 +98,6 @@ export class App extends React.Component<any, IAppState> {
                             <AllEmployeesPage {...routerProps} />
                         }
                     />
-
                     </Switch>
                     : null}
                 </Switch>

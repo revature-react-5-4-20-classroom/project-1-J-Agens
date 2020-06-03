@@ -1,31 +1,32 @@
 import React from 'react';
 import { User } from '../models/User';
 import { Reimbursement } from '../models/Reimbursement';
-import { Jumbotron, Container, Row, Table } from 'reactstrap';
-import { getAllTickets } from '../api/projectClient';
-import { generateRembListItems } from '../subcomponents/generateRembListItems' 
-// Needed later to approve/deny/resolve requests.
-interface IAllTicketsPageProps {
-    loggedInUser : User | null;
-     
+import { getAllTickets, getMyTickets } from '../api/projectClient';
+import { Container, Jumbotron, Row, Table, Button } from 'reactstrap';
+import { generateRembListItems } from '../subcomponents/generateRembListItems';
+
+interface IAllTicketsByAuthorProps {
+    loggedInUser? : User | null; 
+    author: number;
+    authorFirstName: string;
+    toggleAuthor: () => void;
 }
 
-interface IAllTicketsPageState {
-    allTickets : Reimbursement[];
+interface IAllTicketsByAuthorState {
+    authorTickets: Reimbursement[];
 }
-export class AllTicketsPage extends React.Component<IAllTicketsPageProps, IAllTicketsPageState> {
 
-    constructor(props : IAllTicketsPageProps) {
+export class AllTicketsByAuthor extends React.Component<IAllTicketsByAuthorProps, IAllTicketsByAuthorState> {
+    constructor(props : IAllTicketsByAuthorProps) {
         super(props);
         this.state = {
-            allTickets: []
+            authorTickets: []
         }
     }
 
     async componentDidMount() {
-        const respTickets = await getAllTickets();
-        this.setState({allTickets: respTickets});
-        console.log('There was a problem getting all tickets.');
+        const respTickets = await getMyTickets(this.props.author);
+        this.setState({authorTickets: respTickets});
     }
 
     // MOVED to subcomponents directory
@@ -42,7 +43,7 @@ export class AllTicketsPage extends React.Component<IAllTicketsPageProps, IAllTi
                 <Container>
                     <div className="row justify-content-center">
                         <div className="col-md-6">
-                            <h2 className="fin-title">All Tickets</h2>
+                            <h2 className="fin-title">{this.props.authorFirstName} Tickets</h2>
                         </div>
                     </div>
                 </Container>
@@ -59,10 +60,13 @@ export class AllTicketsPage extends React.Component<IAllTicketsPageProps, IAllTi
                             <th>Resolver</th> 
                         </thead>
                         <tbody>
-                            {generateRembListItems(this.state.allTickets)}
+                            {generateRembListItems(this.state.authorTickets)}
                         </tbody>
                     </Table>
                     </div>
+                </Row>
+                <Row>
+                    <Button onClick={this.props.toggleAuthor}>Back</Button>
                 </Row>
             </Container>
           </div>

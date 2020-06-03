@@ -3,10 +3,13 @@ import { User } from '../models/User';
 import { ViewHeader } from '../components/ViewHeader';
 import { Container, Row, Col, Table, Input, FormGroup } from 'reactstrap';
 import { getAllEmployees } from '../api/projectClient';
+import { AllTicketsByAuthor } from './AllTicketsByAuthor';
 
 interface IAllEmployeeState {
     allEmployees : User[];
     searchKeyword : string;
+    author: number;
+    authorFirstName: string;
 }
 
 export class AllEmployeesPage extends React.Component<any, IAllEmployeeState> {
@@ -15,7 +18,9 @@ export class AllEmployeesPage extends React.Component<any, IAllEmployeeState> {
         super(props);
         this.state = {
             allEmployees: [],
-            searchKeyword: ''
+            searchKeyword: '',
+            author: 0,
+            authorFirstName: ''
         };
     }
 
@@ -29,51 +34,16 @@ export class AllEmployeesPage extends React.Component<any, IAllEmployeeState> {
         this.setState({searchKeyword: keyword})
     }
 
-    // generateEmployees = (employees : User[]) : any => {
-    //     return this.state.allEmployees.map((employee) => {
-    //         return (
-    //             <Col key={employee.userId} className="test-box">
-
-    //                     {/* <thead>
-    //                         <th>Employee ID</th>
-    //                         <th>First Name</th>
-    //                         <th>Last Name</th>
-    //                         <th>Email</th>
-    //                         <th>Title</th>
-    //                     </thead> */}
-
-    //                         <ul>
-    //                             <li>ID# {employee.userId}</li>
-    //                             <li>{employee.firstName}</li>
-    //                             <li>{employee.lastName}</li>
-    //                             <li>{employee.email}</li>
-    //                             <li>{employee.role?.role}</li>
-    //                          </ul>
-
-
-    //             </Col>
-    //         );
-
-    //     })
-    // } 
-
-    // generateBootStrapStuff = () : any => {
-    //     let myArr = [
-    //         1, 2, 3,
-    //         4, 5, 6, 
-    //         7, 8, 9,
-    //         10, 11, 12,
-    //         13, 14, 15,
-    //         16, 17, 18
-    //     ];
-
-        // return myArr.map((el, idx) => {
-        //     return <Col key={idx} className="shit-box">{el}</Col>
-
-        // })
-            
+    // NOT implemented yet
+    handleEmployeeClick = (emp : number, firstName : string) : void => {
+        this.setState({author: emp, authorFirstName: firstName});
+        console.log('clicked');
         
-    // }
+    }
+
+    toggleAuthor = () : void => {
+        this.setState({author: 0})
+    }
 
     render() {
         console.log('state', this.state);
@@ -85,8 +55,9 @@ export class AllEmployeesPage extends React.Component<any, IAllEmployeeState> {
             }
         })
         const searchResults = searchFilter.map(employee => {
+            const EMP = employee;
             return (
-                <Col key={employee.userId} className="test-box">
+                <Col key={employee.userId} className="test-box" onClick={(e) => {return this.handleEmployeeClick(EMP.userId, EMP.firstName || '')}}>
                             <ul>
                                 <li>ID# {employee.userId}</li>
                                 <li>{employee.firstName}</li>
@@ -99,15 +70,19 @@ export class AllEmployeesPage extends React.Component<any, IAllEmployeeState> {
             });
         console.log('search results: ', searchResults);
         
-        return (
-            <div>
-                <ViewHeader heading="All Employees" />
-                <Container fluid="xl">
-                <FormGroup row>
-                    <Input onChange={this.searchHandler} type="text" name="search" id="search-bar" placeholder="search by name" value={this.state.searchKeyword} />
-                </FormGroup>
-                <Row xs="1" sm="2" md="4">{searchResults}</Row>
-                </Container>
+        return (<div> 
+                {
+                this.state.author === 0 ? <div>
+                <ViewHeader heading="All Employees" /> 
+                    <Container fluid="xl">
+                    <FormGroup row>
+                        <Input onChange={this.searchHandler} type="text" name="search" id="search-bar" placeholder="search by name" value={this.state.searchKeyword} />
+                    </FormGroup>
+                    <Row xs="1" sm="2" md="4">{searchResults}</Row>
+                    </Container></div> : <div>
+                        <AllTicketsByAuthor author={this.state.author} authorFirstName={this.state.authorFirstName} toggleAuthor={this.toggleAuthor} />
+                        </div> 
+                    }
             </div>
         );
     }

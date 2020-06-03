@@ -36,7 +36,7 @@ export class AllEmployeesPage extends React.Component<any, IAllEmployeeState> {
                         </thead> */}
 
                             <ul>
-                                <li list-style-type="none">ID# {employee.userId}</li>
+                                <li>ID# {employee.userId}</li>
                                 <li>{employee.firstName}</li>
                                 <li>{employee.lastName}</li>
                                 <li>{employee.email}</li>

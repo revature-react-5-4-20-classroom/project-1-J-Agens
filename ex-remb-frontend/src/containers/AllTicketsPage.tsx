@@ -1,7 +1,7 @@
 import React from 'react';
 import { User } from '../models/User';
 import { Reimbursement } from '../models/Reimbursement';
-import { Jumbotron, Container, Row } from 'reactstrap';
+import { Jumbotron, Container, Row, Table } from 'reactstrap';
 import { getAllTickets } from '../api/projectClient';
 
 interface IAllTicketsPageProps {
@@ -30,11 +30,35 @@ export class AllTicketsPage extends React.Component<IAllTicketsPageProps, IAllTi
         // Write a function that produces the list
         return tickets.map((ticket : Reimbursement) => {
             if (ticket.status === 1) {
-                return <li className="pending-ticket" key={ticket.reimbursementId}>{ticket.amount} | {ticket.dateSubmitted}</li>;
+                return (
+                    <tr key={ticket.reimbursementId} className="pending-ticket">
+                        <td>{ticket.author}</td>
+                        <td>{ticket.amount}</td>
+                        <td>{ticket.dateSubmitted}</td>
+                        <td>{ticket.dateResolved}<i className="gray">pending</i></td>
+                        <td>{ticket.resolver}<i className="gray">pending</i></td>
+                    </tr>
+                    );
             } else if(ticket.status === 2) {
-                return <li className="approved-ticket" key={ticket.reimbursementId}>{ticket.amount} | {ticket.dateSubmitted}</li>;
+                return (
+                    <tr key={ticket.reimbursementId} className="approved-ticket">
+                        <td>{ticket.author}</td>
+                        <td>{ticket.amount}</td>
+                        <td>{ticket.dateSubmitted}</td>
+                        <td>{ticket.dateResolved}</td>
+                        <td>{ticket.resolver}</td>
+                    </tr>
+                );
             } else if (ticket.status === 3){
-                return <li className="denied-ticket" key={ticket.reimbursementId}>{ticket.amount} | {ticket.dateSubmitted}</li>;
+                return (
+                    <tr key={ticket.reimbursementId} className="denied-ticket">
+                        <td>{ticket.author}</td>
+                        <td>{ticket.amount}</td>
+                        <td>{ticket.dateSubmitted}</td>
+                        <td>{ticket.dateResolved}</td>
+                        <td>{ticket.resolver}</td>
+                    </tr>
+                );
             } else return null
             
         });
@@ -58,7 +82,20 @@ export class AllTicketsPage extends React.Component<IAllTicketsPageProps, IAllTi
             </Jumbotron>
             <Container>
                 <Row>
-                    <ul>{this.generateRembListItems(this.state.allTickets)}</ul>
+                    <div className="col-12">
+                    <Table size="lg">
+                        <thead>
+                            <th>Author</th> 
+                            <th>Amount</th> 
+                            <th>Date Submitted</th> 
+                            <th>Date Resolved</th>
+                            <th>Resolver</th> 
+                        </thead>
+                        <tbody>
+                            {this.generateRembListItems(this.state.allTickets)}
+                        </tbody>
+                    </Table>
+                    </div>
                 </Row>
             </Container>
           </div>

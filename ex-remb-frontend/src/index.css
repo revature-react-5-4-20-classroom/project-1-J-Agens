@@ -14,10 +14,15 @@
     color: purple;
 }
 
-#fin-nav {
+#fin-nav-01, #fin-nav-02 {
     color: purple;
 }
 
+
 #admin-nav {
     color: darkblue;
+}
+
+.gray {
+    color: lightgray;
 }

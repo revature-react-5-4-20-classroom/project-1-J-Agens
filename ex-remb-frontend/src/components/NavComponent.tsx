@@ -33,7 +33,10 @@ export const NavComponent = (props : INavComponentProps) => {
                     return (
                         <React.Fragment>
                             <NavItem>
-                                <NavLink tag={Link} to="/reimbursements" id="fin-nav">All Tickets</NavLink>
+                                <NavLink tag={Link} to="/reimbursements" id="fin-nav-01">Tickets</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink tag={Link} to="/users" id="fin-nav-02">Employees</NavLink>
                             </NavItem>
                         </React.Fragment>
                     );

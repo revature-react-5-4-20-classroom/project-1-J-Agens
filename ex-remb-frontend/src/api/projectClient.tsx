@@ -106,6 +106,7 @@ export async function getAllTickets() : Promise<Reimbursement[]> {
     try {
         const response = await projectClient.get('/reimbursements');
         const ticketsArr : Reimbursement[] = response.data.map((ticket : any) => {
+            const dateSub = ticket.dateSubmitted.slice(0, 10);
             const {
                 reimbursementId, 
                 author, 
@@ -121,7 +122,7 @@ export async function getAllTickets() : Promise<Reimbursement[]> {
                 reimbursementId,
                 author,
                 amount,
-                dateSubmitted,
+                dateSub,
                 dateResolved,
                 description,
                 resolver,

@@ -4,8 +4,9 @@ import { Reimbursement } from '../models/Reimbursement';
 import { Jumbotron, Container, Row, Table } from 'reactstrap';
 import { getAllTickets } from '../api/projectClient';
 
+// Needed later to approve/deny/resolve requests.
 interface IAllTicketsPageProps {
-    loggedInUser : User | null;
+    loggedInUser : User | null; 
 }
 
 interface IAllTicketsPageState {
@@ -80,7 +81,7 @@ export class AllTicketsPage extends React.Component<IAllTicketsPageProps, IAllTi
                     </div>
                 </Container>
             </Jumbotron>
-            <Container>
+            <Container fluid="xl">
                 <Row>
                     <div className="col-12">
                     <Table size="lg">

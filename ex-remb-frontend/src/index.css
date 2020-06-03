@@ -26,3 +26,12 @@
 .gray {
     color: lightgray;
 }
+
+.test-box{
+    border: 2px dashed lightslategray;
+}
+
+.test-box:hover{
+    /* border: none; */
+    background: rgba(189, 132, 255, 0.493);
+}

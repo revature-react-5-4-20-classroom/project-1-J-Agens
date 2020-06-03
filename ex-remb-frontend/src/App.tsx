@@ -8,6 +8,7 @@ import { login } from './api/projectClient';
 import { NewRembPage } from './containers/NewRembPage';
 import { MyTicketsPage } from './containers/MyTicketsPage';
 import { AllTicketsPage } from './containers/AllTicketsPage';
+import { AllEmployeesPage } from './containers/AllEmployeesPage';
 
 interface IAppState {
     loggedInUser : User | null
@@ -91,6 +92,13 @@ export class App extends React.Component<any, IAppState> {
                             <AllTicketsPage {...routerProps} loggedInUser={this.state.loggedInUser} />
                         }
                     />
+                    <Route 
+                        exact path="/users"
+                        render={routerProps => 
+                            <AllEmployeesPage {...routerProps} />
+                        }
+                    />
+
                     </Switch>
                     : null}
                 </Switch>

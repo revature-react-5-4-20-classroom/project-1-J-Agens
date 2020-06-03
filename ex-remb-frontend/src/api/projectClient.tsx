@@ -9,6 +9,7 @@ const projectClient = axios.create({
     withCredentials: true
 });
 
+// Login to create session on the server
 export async function login(un : string, pw : string) : Promise<User> {
     try {
         const response = await projectClient.post('/login', {username: un, password: pw});
@@ -23,6 +24,7 @@ export async function login(un : string, pw : string) : Promise<User> {
     }
 }
 
+// Any employee can submit a reimbursement ticket
 export async function submitTicket(ath : number, amt : number, date : string, dsc : string, typ : number) : Promise<Reimbursement> {
 
     try {        
@@ -59,6 +61,7 @@ export async function submitTicket(ath : number, amt : number, date : string, ds
     }
 }
 
+// Any employee can view his own reimbursement tickets
 export async function getMyTickets(u : number) : Promise<Reimbursement[]> {
     try {
         const response = await projectClient.get(`/reimbursements/author/userId/${u}`);
@@ -87,6 +90,7 @@ export async function getMyTickets(u : number) : Promise<Reimbursement[]> {
     }
 }
 
+// Any user can change his personal information.
 export async function editMyInfo(uId : number, un: string, em: string) : Promise<User> {
     try {
         const configObj = {userId: uId, username: un, email: em}
@@ -102,6 +106,7 @@ export async function editMyInfo(uId : number, un: string, em: string) : Promise
     }
 }
 
+// A "finance manager" can see all reimbursement tickets
 export async function getAllTickets() : Promise<Reimbursement[]> {
     try {
         const response = await projectClient.get('/reimbursements');
@@ -111,7 +116,7 @@ export async function getAllTickets() : Promise<Reimbursement[]> {
                 reimbursementId, 
                 author, 
                 amount, 
-                dateSubmitted, 
+                dateSubmitted, // remove
                 dateResolved, 
                 description, 
                 resolver, 
@@ -138,4 +143,39 @@ export async function getAllTickets() : Promise<Reimbursement[]> {
             throw e;
         }
     }
+}
+
+// A "finance manager can view all employee profiles"
+export async function getAllEmployees() : Promise<User[]> {
+    try {
+        const response = await projectClient.get('/users');
+        return response.data.map((emp : any) => {
+            const {
+                userId,
+                username,
+                password,
+                firstName,
+                lastName,
+                email,
+                role
+            } = emp;
+            return new User(
+                userId,
+                username,
+                password,
+                firstName,
+                lastName,
+                email,
+                role
+            );
+        });
+    } catch (e) {
+        if (e.response.status === 400) {
+            throw new FailedLoginError('Failed to get all employees', 'try again');
+        } else {
+            throw e;
+        }
+        
+    }
+        
 }

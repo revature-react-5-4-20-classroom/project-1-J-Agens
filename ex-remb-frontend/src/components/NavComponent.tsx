@@ -25,6 +25,33 @@ interface INavComponentProps {
 export const NavComponent = (props : INavComponentProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => setIsOpen(!isOpen);
+
+    const generateManagerItems = (user : User | null) => {
+        if (user) {
+            if (user.role) {
+                if(user.role.roleId === 2) {
+                    return (
+                        <React.Fragment>
+                            <NavItem>
+                                <NavLink tag={Link} to="/reimbursements" id="fin-nav">All Tickets</NavLink>
+                            </NavItem>
+                        </React.Fragment>
+                    );
+                } else if (user.role.roleId == 3) {
+                    return (<React.Fragment>
+                        <NavItem>
+                            <NavLink tag={Link} to="/admin" id="admin-nav">Admin</NavLink>
+                        </NavItem>
+                    </React.Fragment>);
+                } else {
+                    return null;
+                }
+            } else {
+                return null;
+            }
+        } else return null;
+    }
+
     return (
         <Navbar color="light" light expand="md">
             <NavbarBrand tag={Link} to="/">ERS</NavbarBrand>
@@ -40,6 +67,7 @@ export const NavComponent = (props : INavComponentProps) => {
                 <NavItem>
                     <NavLink tag={Link} to={`/reimbursements/author/userId/${props.loggedInUser?.userId}`}> My Tickets </NavLink>
                 </NavItem>
+                {generateManagerItems(props.loggedInUser)}
                 <NavItem>
                     {props.loggedInUser ? 
                         <NavLink tag={Link} onClick={props.logOut} to="/login"> Log Out </NavLink>

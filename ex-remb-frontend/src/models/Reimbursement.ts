@@ -1,3 +1,5 @@
+import { isObject } from "util";
+
 export class Reimbursement {
     reimbursementId: number;
     author?: number;

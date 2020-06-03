@@ -9,3 +9,15 @@
 .denied-ticket {
     color: rgb(148, 13, 13);
 }
+
+.fin-title {
+    color: purple;
+}
+
+#fin-nav {
+    color: purple;
+}
+
+#admin-nav {
+    color: darkblue;
+}

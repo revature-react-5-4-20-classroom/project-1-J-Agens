@@ -101,3 +101,40 @@ export async function editMyInfo(uId : number, un: string, em: string) : Promise
         }
     }
 }
+
+export async function getAllTickets() : Promise<Reimbursement[]> {
+    try {
+        const response = await projectClient.get('/reimbursements');
+        const ticketsArr : Reimbursement[] = response.data.map((ticket : any) => {
+            const {
+                reimbursementId, 
+                author, 
+                amount, 
+                dateSubmitted, 
+                dateResolved, 
+                description, 
+                resolver, 
+                status, 
+                type
+            } = ticket;
+            return new Reimbursement(
+                reimbursementId,
+                author,
+                amount,
+                dateSubmitted,
+                dateResolved,
+                description,
+                resolver,
+                status,
+                type
+            );
+        });
+        return ticketsArr;
+    } catch (e) {
+        if (e.response.status === 400) {
+            throw new FailedLoginError('Failed to get to /rembs: ', "try again");
+        } else {
+            throw e;
+        }
+    }
+}

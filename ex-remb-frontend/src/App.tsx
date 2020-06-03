@@ -7,6 +7,7 @@ import { User } from './models/User';
 import { login } from './api/projectClient';
 import { NewRembPage } from './containers/NewRembPage';
 import { MyTicketsPage } from './containers/MyTicketsPage';
+import { AllTicketsPage } from './containers/AllTicketsPage';
 
 interface IAppState {
     loggedInUser : User | null
@@ -82,6 +83,12 @@ export class App extends React.Component<any, IAppState> {
                         path="/reimbursements/author/userId"
                         render={routerProps =>
                             <MyTicketsPage {...routerProps} loggedInUser={this.state.loggedInUser} />
+                        }
+                    />
+                    <Route 
+                        exact path="/reimbursements"
+                        render={routerProps => 
+                            <AllTicketsPage {...routerProps} loggedInUser={this.state.loggedInUser} />
                         }
                     />
                     </Switch>

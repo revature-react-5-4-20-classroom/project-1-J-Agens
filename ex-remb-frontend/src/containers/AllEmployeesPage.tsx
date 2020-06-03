@@ -1,11 +1,12 @@
 import React from 'react';
 import { User } from '../models/User';
 import { ViewHeader } from '../components/ViewHeader';
-import { Container, Row, Col, Table } from 'reactstrap';
+import { Container, Row, Col, Table, Input, FormGroup } from 'reactstrap';
 import { getAllEmployees } from '../api/projectClient';
 
 interface IAllEmployeeState {
     allEmployees : User[];
+    searchKeyword : string;
 }
 
 export class AllEmployeesPage extends React.Component<any, IAllEmployeeState> {
@@ -13,7 +14,8 @@ export class AllEmployeesPage extends React.Component<any, IAllEmployeeState> {
     constructor(props : any) {
         super(props);
         this.state = {
-            allEmployees: []
+            allEmployees: [],
+            searchKeyword: ''
         };
     }
 
@@ -22,33 +24,38 @@ export class AllEmployeesPage extends React.Component<any, IAllEmployeeState> {
         this.setState({allEmployees: people})
     }
 
-    generateEmployees = (employees : User[]) : any => {
-        return this.state.allEmployees.map((employee) => {
-            return (
-                <Col key={employee.userId} className="test-box">
+    searchHandler = (event : any) : void => {
+        let keyword = event.target.value;
+        this.setState({searchKeyword: keyword})
+    }
 
-                        {/* <thead>
-                            <th>Employee ID</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Email</th>
-                            <th>Title</th>
-                        </thead> */}
+    // generateEmployees = (employees : User[]) : any => {
+    //     return this.state.allEmployees.map((employee) => {
+    //         return (
+    //             <Col key={employee.userId} className="test-box">
 
-                            <ul>
-                                <li>ID# {employee.userId}</li>
-                                <li>{employee.firstName}</li>
-                                <li>{employee.lastName}</li>
-                                <li>{employee.email}</li>
-                                <li>{employee.role?.role}</li>
-                             </ul>
+    //                     {/* <thead>
+    //                         <th>Employee ID</th>
+    //                         <th>First Name</th>
+    //                         <th>Last Name</th>
+    //                         <th>Email</th>
+    //                         <th>Title</th>
+    //                     </thead> */}
+
+    //                         <ul>
+    //                             <li>ID# {employee.userId}</li>
+    //                             <li>{employee.firstName}</li>
+    //                             <li>{employee.lastName}</li>
+    //                             <li>{employee.email}</li>
+    //                             <li>{employee.role?.role}</li>
+    //                          </ul>
 
 
-                </Col>
-            );
+    //             </Col>
+    //         );
 
-        })
-    } 
+    //     })
+    // } 
 
     // generateBootStrapStuff = () : any => {
     //     let myArr = [
@@ -69,11 +76,37 @@ export class AllEmployeesPage extends React.Component<any, IAllEmployeeState> {
     // }
 
     render() {
+        console.log('state', this.state);
+        const searchFilter = this.state.allEmployees.filter((employee) => {
+            if (this.state.searchKeyword === '') {
+                return employee;
+            } else if(employee.firstName?.toLowerCase().includes(this.state.searchKeyword.toLowerCase()) || employee.lastName?.toLowerCase().includes(this.state.searchKeyword)) {
+                return employee;
+            }
+        })
+        const searchResults = searchFilter.map(employee => {
+            return (
+                <Col key={employee.userId} className="test-box">
+                            <ul>
+                                <li>ID# {employee.userId}</li>
+                                <li>{employee.firstName}</li>
+                                <li>{employee.lastName}</li>
+                                <li>{employee.email}</li>
+                                <li>{employee.role?.role}</li>
+                            </ul>
+                        </Col>
+            );
+            });
+        console.log('search results: ', searchResults);
+        
         return (
             <div>
                 <ViewHeader heading="All Employees" />
                 <Container fluid="xl">
-                <Row xs="1" sm="2" md="4">{this.generateEmployees(this.state.allEmployees)}</Row>
+                <FormGroup row>
+                    <Input onChange={this.searchHandler} type="text" name="search" id="search-bar" placeholder="search by name" value={this.state.searchKeyword} />
+                </FormGroup>
+                <Row xs="1" sm="2" md="4">{searchResults}</Row>
                 </Container>
             </div>
         );

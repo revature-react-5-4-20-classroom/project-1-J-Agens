@@ -179,3 +179,41 @@ export async function getAllEmployees() : Promise<User[]> {
     }
         
 }
+
+// A finance manager can approve or deny a request
+export async function resolveReimbursement(rembId : number, dateRsv : string, rsvr : number, st: number) : Promise<Reimbursement> {
+    try {
+        const configObj = {reimbursementId: rembId, dateResolved: dateRsv, resolver: rsvr, status: st};
+        const response = await projectClient.patch('/reimbursements', configObj);
+        console.log('respons');
+        
+        const {
+            reimbursementId, 
+            author, 
+            amount, 
+            dateSubmitted, 
+            dateResolved, 
+            description, 
+            resolver, 
+            status, 
+            type
+        } = response.data;
+        return new Reimbursement(
+            reimbursementId,
+            author,
+            amount,
+            dateSubmitted,
+            dateResolved,
+            description,
+            resolver,
+            status,
+            type
+        );
+    } catch (e) {
+        if (e.response.status === 400) {
+            throw new FailedLoginError('Failed update ticket: ', `${e.message}`);
+        } else {
+            throw e;
+        }
+    }
+}

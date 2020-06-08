@@ -9,6 +9,7 @@ import { NewRembPage } from './containers/NewRembPage';
 import { MyTicketsPage } from './containers/MyTicketsPage';
 import { AllTicketsPage } from './containers/AllTicketsPage';
 import { AllEmployeesPage } from './containers/AllEmployeesPage';
+import { ResolveTicketPage } from './containers/ResolveTicketPage';
 
 interface IAppState {
     loggedInUser : User | null
@@ -96,6 +97,12 @@ export class App extends React.Component<any, IAppState> {
                         exact path="/users"
                         render={routerProps => 
                             <AllEmployeesPage {...routerProps} />
+                        }
+                    />
+                    <Route 
+                        exact path="/reimbursements/resolve"
+                        render={routerProps => 
+                            <ResolveTicketPage {...routerProps} loggedInUser={this.state.loggedInUser ? this.state.loggedInUser : null}/>
                         }
                     />
                     </Switch>

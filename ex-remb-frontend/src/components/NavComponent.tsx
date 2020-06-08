@@ -38,6 +38,9 @@ export const NavComponent = (props : INavComponentProps) => {
                             <NavItem>
                                 <NavLink tag={Link} to="/users" id="fin-nav-02">Employees</NavLink>
                             </NavItem>
+                            <NavItem>
+                                <NavLink tag={Link} to="/reimbursements/resolve" id="fin-nav-03">Resolve Ticket</NavLink>
+                            </NavItem>
                         </React.Fragment>
                     );
                 } else if (user.role.roleId == 3) {

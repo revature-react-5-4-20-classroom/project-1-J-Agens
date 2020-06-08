@@ -24,7 +24,7 @@ export const generateRembListItems = (tickets : any) => {
                     <td>{ticket.resolver}</td>
                 </tr>
             );
-        } else if (ticket.status === 3){
+        } else if (ticket.status === 3) {
             return (
                 <tr key={ticket.reimbursementId} className="denied-ticket">
                     <td>{ticket.author}</td>

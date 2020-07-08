@@ -58,7 +58,7 @@ export class AllTicketsPage extends React.Component<IAllTicketsPageProps, IAllTi
                             <th>Date Resolved</th>
                             <th>Resolver</th> 
                         </thead>
-                        <tbody>
+                        <tbody style={{maxHeight: "50vh"}}>
                             {generateRembListItems(this.state.allTickets)}
                         </tbody>
                     </Table>

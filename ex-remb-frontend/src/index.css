@@ -10,12 +10,21 @@
     color: rgb(148, 13, 13);
 }
 
+#login-title {
+    color: #002366;
+}
+
+.page-title {
+    text-align: center;
+}
+
 .fin-title {
-    color: purple;
+    color: #002366;
+    text-align: center;
 }
 
 #fin-nav-01, #fin-nav-02, #fin-nav-03 {
-    color: purple;
+    color: #002366;
 }
 
 
@@ -32,6 +41,17 @@
 }
 
 .test-box:hover{
-    /* border: none; */
-    background: rgba(189, 132, 255, 0.493);
+    color: white;
+    background: rgb(0,35,102, 0.5);
+    cursor: pointer;
+}
+
+.btn-secondary {
+    background-color: white;
+    border-color: #002366;
+    color: #002366;
+}
+
+.btn-secondary:hover {
+    background-color: rgb(0,35,102, 0.5);
 }

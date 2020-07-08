@@ -42,7 +42,7 @@ export class AllTicketsPage extends React.Component<IAllTicketsPageProps, IAllTi
                 <Container>
                     <div className="row justify-content-center">
                         <div className="col-md-6">
-                            <h2 className="fin-title">All Tickets</h2>
+                            <h2 className="fin-title" style={{textAlign: "center"}}>All Tickets</h2>
                         </div>
                     </div>
                 </Container>

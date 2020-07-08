@@ -1,8 +1,9 @@
 import React from 'react';
 import { User } from '../models/User';
-import { Jumbotron, Container, ListGroup, ListGroupItem, Row } from 'reactstrap';
+import { Jumbotron, Container, ListGroup, ListGroupItem, Row, Table } from 'reactstrap';
 import { Reimbursement } from '../models/Reimbursement';
 import { getMyTickets } from '../api/projectClient';
+import { generateRembListItems } from '../subcomponents/generateRembListItems';
 
 interface IMyTicketsPageProps {
     loggedInUser?: User | null;
@@ -52,14 +53,27 @@ export class MyTicketsPage extends React.Component<IMyTicketsPageProps, IMyTicke
                 <Container>
                     <div className="row justify-content-center">
                         <div className="col-md-6">
-                            <h2>My Tickets</h2>
+                            <h2 className="page-title">My Tickets</h2>
                         </div>
                     </div>
                 </Container>
             </Jumbotron>
             <Container>
                 <Row>
-                    <ul>{this.generateRembListItems(this.state.myTickets)}</ul>
+                <div className="col-12">
+                    <Table size="lg">
+                        <thead>
+                            <th>Author</th> 
+                            <th>Amount</th> 
+                            <th>Date Submitted</th> 
+                            <th>Date Resolved</th>
+                            <th>Resolver</th> 
+                        </thead>
+                        <tbody>
+                            {generateRembListItems(this.state.myTickets)}
+                        </tbody>
+                    </Table>
+                    </div>
                 </Row>
             </Container>
           </div>

@@ -62,31 +62,36 @@ export class LoginComponent extends React.Component<ILoginComponentProps, ILogin
     render() {
         return (
             <div className="container">
-                <Form onSubmit={this.handleSubmit}>
-                    <FormGroup row>
-                        <Label for="username" sm={2}>Username</Label>
-                        <Col sm={6}>
-                            {/* onChange lets Input change state, value lets Input display state */}
-                            <Input onChange={this.handleChange} value={this.state.username} type="text" name="username" id="username" placeholder="your username" />
-                        </Col>
-                    </FormGroup>
-                    <FormGroup row>
-                        <Label for="password" sm={2}>Password</Label>
-                        <Col sm={6}>
-                            {/* input can be set to required here with an attribute I don't remember */}
-                            <Input onChange={this.handleChange} value={this.state.password} type="password" name="password" id="password" placeholder="password"></Input>
-                        </Col>
-                    </FormGroup>
-                    <Button type="submit">Submit</Button>
-                </Form>
-                <Toast isOpen={this.state.isError}>
-                    <ToastHeader toggle={this.clearError}>
-                        Error!
-                    </ToastHeader>
-                    <ToastBody>
-                        {this.state.errorMessage}
-                    </ToastBody>
-                </Toast>
+                <div className="row justify-content-center">
+                    <div className="col-xs-12" style={{margin: "15%", width: "50vw"}}>
+                        <h3 id="login-title">Login</h3>
+                        <Form onSubmit={this.handleSubmit}>
+                            <FormGroup row>
+                                {/* <Label for="username" sm={2}>Username</Label> */}
+                                <Col sm={6}>
+                                    {/* onChange lets Input change state, value lets Input display state */}
+                                    <Input onChange={this.handleChange} value={this.state.username} type="text" name="username" id="username" placeholder="your username" />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                {/* <Label for="password" sm={2}>Password</Label> */}
+                                <Col sm={6}>
+                                    {/* input can be set to required here with an attribute I don't remember */}
+                                    <Input onChange={this.handleChange} value={this.state.password} type="password" name="password" id="password" placeholder="password"></Input>
+                                </Col>
+                            </FormGroup>
+                            <Button type="submit">Submit</Button>
+                        </Form>
+                        <Toast isOpen={this.state.isError}>
+                            <ToastHeader toggle={this.clearError}>
+                                Error!
+                            </ToastHeader>
+                            <ToastBody>
+                                {this.state.errorMessage}
+                            </ToastBody>
+                        </Toast>
+                    </div>
+                </div>
             </div>
         )
     }

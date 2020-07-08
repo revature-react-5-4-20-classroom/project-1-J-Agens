@@ -84,7 +84,7 @@ export class NewRembPage extends React.Component<INewRembPageProps, INewRembPage
                     <Container>
                         <div className="row justify-content-center">
                             <div className="col-md-6">
-                                <h2>Submit a New Ticket</h2>
+                                <h2 className="page-title">Submit a New Ticket</h2>
                             </div>
                         </div>
                     </Container>

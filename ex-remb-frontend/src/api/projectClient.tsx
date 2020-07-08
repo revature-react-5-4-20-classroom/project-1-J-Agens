@@ -4,8 +4,9 @@ import { FailedLoginError } from '../errors/FailedLoginError';
 import { Reimbursement } from '../models/Reimbursement';
 
 const projectClient = axios.create({
-    baseURL: 'http://13.58.192.151:3000',
-    // baseURL: 'http://localhost:3000',
+    // IP changed. Change in S3 bucket
+    // baseURL: 'http://3.128.76.223:3000',
+    baseURL: 'http://localhost:3000',
     withCredentials: true
 });
 
@@ -111,7 +112,14 @@ export async function getAllTickets() : Promise<Reimbursement[]> {
     try {
         const response = await projectClient.get('/reimbursements');
         const ticketsArr : Reimbursement[] = response.data.map((ticket : any) => {
+            // Clip timestamps off dates
             const dateSub = ticket.dateSubmitted.slice(0, 10);
+            let dateRes : string;
+            if (ticket.dateResolved) {
+                dateRes = ticket.dateResolved.slice(0, 10);
+            } else {
+                dateRes = '';
+            }
             const {
                 reimbursementId, 
                 author, 
@@ -128,7 +136,7 @@ export async function getAllTickets() : Promise<Reimbursement[]> {
                 author,
                 amount,
                 dateSub,
-                dateResolved,
+                dateRes || dateResolved,
                 description,
                 resolver,
                 status,

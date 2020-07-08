@@ -1,6 +1,6 @@
 import React from 'react';
 import { User } from '../models/User';
-import { Jumbotron, Container, Form, Row, Col, FormGroup, Label, Input, Button } from 'reactstrap';
+import { Jumbotron, Container, Form, Row, Col, FormGroup, Label, Input, Button, Toast, ToastHeader, ToastBody } from 'reactstrap';
 import { resolveReimbursement, getAllTickets } from '../api/projectClient';
 import { Reimbursement } from '../models/Reimbursement';
 
@@ -68,6 +68,13 @@ export class ResolveTicketPage extends React.Component<any, IResolveTicketPageSt
         }
     }
 
+    clearError = () => {
+        this.setState({
+            isError: false,
+            errorMessage: ''
+        });
+    }
+
     generateReimbursementList = (rembs : Reimbursement[]) => {
         const filterdRems = rembs.filter((remb) =>  {
             if (remb.status === 1) {
@@ -75,15 +82,12 @@ export class ResolveTicketPage extends React.Component<any, IResolveTicketPageSt
             }
         });
         return filterdRems.map((rem) => {
-            return <option key={rem.reimbursementId} value={rem.reimbursementId}>{rem.reimbursementId} amount: ${rem.amount}</option>
+            return <option key={rem.reimbursementId} value={rem.reimbursementId}>{rem.dateSubmitted}: ${rem.amount} (Employee ID: {rem.author})</option>
         });
     }
 
     render() {
-        const rembOptions = this.generateReimbursementList(this.state.tickets);
-        console.log("ResolveTicketPageProps: ", this.props);
-        console.log("ResolveTicketPageState: ", this.state);
-        
+        const rembOptions = this.generateReimbursementList(this.state.tickets);        
         return (
             <div>
                 <Jumbotron>
@@ -124,6 +128,14 @@ export class ResolveTicketPage extends React.Component<any, IResolveTicketPageSt
                         </Row>
                         <Button>Submit</Button>
                     </Form>
+                    <Toast isOpen={this.state.isError}>
+                            <ToastHeader toggle={this.clearError}>
+                                Error!
+                            </ToastHeader>
+                            <ToastBody>
+                                {this.state.errorMessage}
+                            </ToastBody>
+                        </Toast>
                 </Container>
             </div>
         );

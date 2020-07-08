@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Jumbotron, Form, Row, Col, FormGroup, Label, Input, Button } from 'reactstrap';
+import { Container, Jumbotron, Form, Row, Col, FormGroup, Label, Input, Button, Toast, ToastHeader, ToastBody } from 'reactstrap';
 import { User } from '../models/User';
 import { submitTicket } from '../api/projectClient';
 
@@ -75,6 +75,13 @@ export class NewRembPage extends React.Component<INewRembPageProps, INewRembPage
         }
     }
 
+    clearError = () => {
+        this.setState({
+            isError: false,
+            errorMessage: ''
+        });
+    }
+
     
     render() {
         
@@ -94,13 +101,13 @@ export class NewRembPage extends React.Component<INewRembPageProps, INewRembPage
                         <Row form>
                             <Col md={6}>
                             <FormGroup>
-                                <Label for="amountInput">amount</Label>
+                                <Label for="amountInput">Amount</Label>
                                 <Input value={this.state.amount} onChange={this.handleChange} type="number" min="1" step=".01" name="amount" id="amountInput"  placeholder="$00.00" />
                             </FormGroup>
                             </Col>
                             <Col md={6}>
                             <FormGroup>
-                                <Label for="dateSubmittedInput">Date</Label>
+                                <Label for="dateSubmittedInput">Date of Expenditure</Label>
                                 <Input value={this.state.dateSubmitted} onChange={this.handleChange} type="text" name="dateSubmitted" id="dateSubmittedInput" placeholder="DD/MM/YYYY" />
                             </FormGroup>
                             </Col>
@@ -120,6 +127,14 @@ export class NewRembPage extends React.Component<INewRembPageProps, INewRembPage
                         </FormGroup>
                         <Button>Submit</Button>
                     </Form>
+                    <Toast isOpen={this.state.isError}>
+                        <ToastHeader toggle={this.clearError}>
+                            Error!
+                        </ToastHeader>
+                        <ToastBody>
+                            {this.state.errorMessage}
+                        </ToastBody>
+                    </Toast>
                 </Container>
             </div>
         );

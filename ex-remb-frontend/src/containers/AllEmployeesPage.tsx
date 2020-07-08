@@ -10,6 +10,7 @@ interface IAllEmployeeState {
     searchKeyword : string;
     author: number;
     authorFirstName: string;
+    authorLastName: string;
 }
 
 export class AllEmployeesPage extends React.Component<any, IAllEmployeeState> {
@@ -20,7 +21,8 @@ export class AllEmployeesPage extends React.Component<any, IAllEmployeeState> {
             allEmployees: [],
             searchKeyword: '',
             author: 0,
-            authorFirstName: ''
+            authorFirstName: '',
+            authorLastName: ''
         };
     }
 
@@ -35,8 +37,12 @@ export class AllEmployeesPage extends React.Component<any, IAllEmployeeState> {
     }
 
     // NOT implemented yet
-    handleEmployeeClick = (emp : number, firstName : string) : void => {
-        this.setState({author: emp, authorFirstName: firstName});
+    handleEmployeeClick = (emp : number, firstName : string, lastName : string) : void => {
+        this.setState({
+            author: emp, 
+            authorFirstName: firstName,
+            authorLastName: lastName
+        });
         console.log('clicked');
         
     }
@@ -57,7 +63,7 @@ export class AllEmployeesPage extends React.Component<any, IAllEmployeeState> {
         const searchResults = searchFilter.map(employee => {
             const EMP = employee;
             return (
-                <Col key={employee.userId} className="test-box" onClick={(e) => {return this.handleEmployeeClick(EMP.userId, EMP.firstName || '')}}>
+                <Col key={employee.userId} className="test-box" onClick={(e) => {return this.handleEmployeeClick(EMP.userId, EMP.firstName || '', EMP.lastName || '')}}>
                             <ul>
                                 <li>ID# {employee.userId}</li>
                                 <li>{employee.firstName}</li>
@@ -80,7 +86,7 @@ export class AllEmployeesPage extends React.Component<any, IAllEmployeeState> {
                     </FormGroup>
                     <Row xs="1" sm="2" md="4">{searchResults}</Row>
                     </Container></div> : <div>
-                        <AllTicketsByAuthor author={this.state.author} authorFirstName={this.state.authorFirstName} toggleAuthor={this.toggleAuthor} />
+                        <AllTicketsByAuthor author={this.state.author} authorFirstName={this.state.authorFirstName} authorLastName={this.state.authorLastName} toggleAuthor={this.toggleAuthor} />
                         </div> 
                     }
             </div>

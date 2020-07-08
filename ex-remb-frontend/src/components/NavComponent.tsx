@@ -65,20 +65,20 @@ export const NavComponent = (props : INavComponentProps) => {
             <Collapse isOpen={isOpen} navbar>
             <Nav className="mr-auto" navbar>
                 <NavItem>
-                    <NavLink tag={Link} to="/"> Home </NavLink>
+                    <NavLink tag={Link} to="/" id="emp-nav-01"> Home </NavLink>
                 </NavItem>
                 <NavItem>
-                    <NavLink tag={Link} to="/reimbursements/new"> New + </NavLink>
+                    <NavLink tag={Link} to="/reimbursements/new" id="emp-nav-02"> New + </NavLink>
                 </NavItem>
                 <NavItem>
-                    <NavLink tag={Link} to={`/reimbursements/author/userId/${props.loggedInUser?.userId}`}> My Tickets </NavLink>
+                    <NavLink tag={Link} to={`/reimbursements/author/userId/${props.loggedInUser?.userId}`} id="emp-nav-05"> My Tickets </NavLink>
                 </NavItem>
                 {generateManagerItems(props.loggedInUser)}
                 <NavItem>
                     {props.loggedInUser ? 
-                        <NavLink tag={Link} onClick={props.logOut} to="/login"> Log Out </NavLink>
+                        <NavLink tag={Link} onClick={props.logOut} to="/login" id="emp-nav-03"> Log Out </NavLink>
                         :
-                        <NavLink tag={Link} to="/login">Login</NavLink>
+                        <NavLink tag={Link} to="/login" id="emp-nav-04">Login</NavLink>
                     }
                 </NavItem>
             </Nav>

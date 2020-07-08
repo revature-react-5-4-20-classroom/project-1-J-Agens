@@ -1,3 +1,8 @@
+body {
+    background-color: #f8f9fa;
+    color: #002366;
+}
+
 .pending-ticket {
     color: orange;
 }
@@ -15,11 +20,14 @@
 }
 
 .page-title {
+    /* color: #002366;
+     */
+    color: #f8f9fa;
     text-align: center;
 }
 
 .fin-title {
-    color: #002366;
+    color: #f8f9fa;
     text-align: center;
 }
 
@@ -27,6 +35,9 @@
     color: #002366;
 }
 
+#emp-nav-01, #emp-nav-02, #emp-nav-03, #emp-nav-04, #emp-nav-05 {
+    color: #002366;
+}
 
 #admin-nav {
     color: darkblue;
@@ -46,6 +57,16 @@
     cursor: pointer;
 }
 
+.btn-primary {
+    background-color: #002366;
+    border-color: #002366;
+    color: #f8f9fa;    
+}
+
+.btn-primary:hover {
+    background-color: rgb(0,35,102, 0.5);
+}
+
 .btn-secondary {
     background-color: white;
     border-color: #002366;
@@ -60,4 +81,6 @@
     max-height: 30px;
     padding-top: 2rem;
     margin-bottom: 1rem;
+    background-color: rgb(0,35,102, 0.5);
+    border-radius: 0%;
 }

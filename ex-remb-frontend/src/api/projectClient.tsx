@@ -55,8 +55,10 @@ export async function submitTicket(ath : number, amt : number, date : string, ds
         );
     } catch (e) {
         if (e.response.status === 400) {
+            console.log("failed to create ticket status 400");
             throw new FailedLoginError('Failed to Create new ticket: ', dsc);
         } else {
+            console.log("failed to create ticket");
             throw e;
         }
     }
@@ -69,12 +71,18 @@ export async function getMyTickets(u : number) : Promise<Reimbursement[]> {
         const myTickets = response.data.map((ticket : any) => {
             // Remember that date is a number, should be reformatted later
             const dateSub = ticket.dateSubmitted.slice(0, 10);
+            let dateRes : string;
+            if (ticket.dateResolved) {
+                dateRes = ticket.dateResolved.slice(0, 10);
+            } else {
+                dateRes = '';
+            }
             return (new Reimbursement(
                 ticket.reimbursementId, 
                 ticket.author, 
                 ticket.amount, 
                 dateSub,
-                ticket.dateResolved, 
+                dateRes || ticket.dateResolved, 
                 ticket.description, 
                 ticket.resolver, 
                 ticket.status, 

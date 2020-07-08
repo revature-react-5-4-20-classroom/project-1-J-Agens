@@ -103,8 +103,8 @@ export class UserEditTable extends React.Component<IUserEditTableProps, IUserEdi
                     <td className="unavailable">{this.props.loggedInUser?.role ? this.props.loggedInUser.role.role : null}</td>
                 </tr>
             </tbody>
-            <Button onClick={this.props.toggleEdit}>Cancel</Button>
             <Button color="primary">Save</Button>
+            <Button onClick={this.props.toggleEdit}>Cancel</Button>
         </Table>
             </form>
         );

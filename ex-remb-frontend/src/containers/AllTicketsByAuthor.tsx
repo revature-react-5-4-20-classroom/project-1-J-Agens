@@ -9,6 +9,7 @@ interface IAllTicketsByAuthorProps {
     loggedInUser? : User | null; 
     author: number;
     authorFirstName: string;
+    authorLastName: string;
     toggleAuthor: () => void;
 }
 
@@ -43,7 +44,7 @@ export class AllTicketsByAuthor extends React.Component<IAllTicketsByAuthorProps
                 <Container>
                     <div className="row justify-content-center">
                         <div className="col-md-6">
-                            <h2 className="fin-title">{this.props.authorFirstName} Tickets</h2>
+                            <h2 className="fin-title">{this.props.authorFirstName} {this.props.authorLastName}</h2>
                         </div>
                     </div>
                 </Container>
